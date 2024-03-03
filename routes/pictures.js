@@ -35,6 +35,30 @@ router.post('/', function(req, res, next) {
   res.end();
 });
 
+router.get('/:name', function(req, res,next){
 
+  const pictureName = req.params.name;
+  console.log("name: ", pictureName);
+
+  const pictures = fs.readdirSync(path.join(__dirname, '../pictures/'));
+  let found;
+
+  console.log("pictures: ", pictures );
+  // console.log("found: ", pictures.filter((name) =>{
+  //   return name.includes(pictureName);
+  // }));
+
+  found = pictures.filter((name) =>{
+    return name.includes(pictureName);
+  });
+  // console.log("found: ", found);
+
+  // index = pictures.filter((name)=>{
+  //   return name.indexOf(pictureName);
+  // });
+  // console.log("index: ", index);
+
+  res.render('pictures',{pictures: found });
+});
 
 module.exports = router;
