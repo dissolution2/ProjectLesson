@@ -1,5 +1,5 @@
 var express = require('express');
-const { requiresAuth } = require('express-openid-connect');
+//const { requiresAuth } = require('express-openid-connect');
 var router = express.Router();
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
@@ -92,7 +92,7 @@ router.post('/', async function(req, res, next) {
   res.end();
 });
 
-router.get('/', requiresAuth, async function(req, res, next) {
+router.get('/', async function(req, res, next) {
   
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
