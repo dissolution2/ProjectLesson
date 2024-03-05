@@ -80,7 +80,7 @@ console.log("test logs on cyclic");
 
 /** AWS database  */
 router.post('/', async function(req, res, next) {
-  console.log(`hello ${req.oidc.user.name}`);
+  
   
   const file = req.files.file;
   console.log(req.files);
