@@ -7,6 +7,10 @@ var path = require('path');
 
 const { requiresAuth } = require('express-openid-connect');
 
+
+console.log("test logs on cyclic");
+console.log("auth: ", requiresAuth);
+
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   const pictures = fs.readdirSync(path.join(__dirname, '../pictures'));
