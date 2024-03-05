@@ -79,6 +79,8 @@ console.log("auth: ", requiresAuth);
 
 /** AWS database  */
 router.post('/', requiresAuth, async function(req, res, next) {
+  
+  
   const file = req.files.file;
   console.log(req.files);
   await s3.putObject({
@@ -90,31 +92,31 @@ router.post('/', requiresAuth, async function(req, res, next) {
 });
 
 router.get('/', requiresAuth, async function(req, res, next) {
+  res.send(`hello ${req.oidc.user.name}`);
+  // var params = {
+  //   Bucket: process.env.CYCLIC_BUCKET_NAME,
+  //   Delimiter: '/',
+  //   Prefix: 'public/'
+  // };
 
-  var params = {
-    Bucket: process.env.CYCLIC_BUCKET_NAME,
-    Delimiter: '/',
-    Prefix: 'public/'
-  };
+  // var allObjects = await s3.listObjects(params).promise();
+  // var keys = allObjects?.Contents.map(x => x.Key);
 
-  var allObjects = await s3.listObjects(params).promise();
-  var keys = allObjects?.Contents.map(x => x.Key);
+  // console.log("objects: ", allObjects);
+  // console.log("keys: ", keys);
 
-  console.log("objects: ", allObjects);
-  console.log("keys: ", keys);
-
-  const pictures = await Promise.all(keys.map(async (key)=>{
-    let my_file = await s3.getObject({
-      Bucket: process.env.CYCLIC_BUCKET_NAME,
-      Key: key
-    }).promise();
-    return {
-      src: Buffer.from(my_file.Body).toString('base64'),
-      name: key.split("/").pop()
-    }
-  }))
+  // const pictures = await Promise.all(keys.map(async (key)=>{
+  //   let my_file = await s3.getObject({
+  //     Bucket: process.env.CYCLIC_BUCKET_NAME,
+  //     Key: key
+  //   }).promise();
+  //   return {
+  //     src: Buffer.from(my_file.Body).toString('base64'),
+  //     name: key.split("/").pop()
+  //   }
+  // }))
   
-  res.render('pictures', {pictures: pictures});
+  // res.render('pictures', {pictures: pictures});
 });
 
 
