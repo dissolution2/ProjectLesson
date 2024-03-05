@@ -10,7 +10,8 @@ var path = require('path');
 
 
 console.log("test logs on cyclic");
-console.log("auth: ", requiresAuth);
+// console.log("auth: ", requiresAuth);
+console.log(`hello ${req.oidc.user.name}`);
 
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -92,7 +93,7 @@ router.post('/', requiresAuth, async function(req, res, next) {
 });
 
 router.get('/', requiresAuth, async function(req, res, next) {
-  console.log(`hello ${req.oidc.user.name}`);
+  
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Delimiter: '/',
