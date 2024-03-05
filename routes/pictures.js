@@ -1,11 +1,12 @@
 var express = require('express');
+const { requiresAuth } = require('express-openid-connect');
 var router = express.Router();
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const fs = require('fs');
 var path = require('path');
 
-const { requiresAuth } = require('express-openid-connect');
+
 
 
 console.log("test logs on cyclic");
