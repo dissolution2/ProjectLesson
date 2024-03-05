@@ -85,9 +85,7 @@ router.get('/profile', requiresAuth(), (req, res) => {
 });
 
 
-router.post('/', requiresAuth, async function(req, res, next) {
-  
-  
+router.post('/', requiresAuth(), async function(req, res, next) {
   const file = req.files.file;
   console.log(req.files);
   await s3.putObject({
@@ -98,10 +96,7 @@ router.post('/', requiresAuth, async function(req, res, next) {
   res.end();
 });
 
-router.get('/', requiresAuth, async function(req, res, next) {
-  
-
-
+router.get('/', requiresAuth(), async function(req, res, next) {
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Delimiter: '/',
