@@ -79,6 +79,12 @@ console.log("test logs on cyclic");
 // });
 
 /** AWS database  */
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
+
 router.post('/', requiresAuth, async function(req, res, next) {
   
   
