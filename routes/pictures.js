@@ -119,7 +119,7 @@ router.get('/', requiresAuth, async function(req, res, next) {
     }
   }))
   
-  res.render('pictures', {requiresAuth pictures: pictures});
+  res.render('pictures', {pictures: pictures});
 });
 
 
