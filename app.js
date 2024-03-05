@@ -14,7 +14,13 @@ var app = express();
 
 const config = {
   authRequired: false,
-  auth0Logout: true
+  auth0Logout: true,
+  getLoginState(req, options) {
+    return {
+      returnTo: options.returnTo || req.originalUrl,
+      customState: 'foo'
+    };
+  }
 };
 
 const port = process.env.PORT || 3000;
