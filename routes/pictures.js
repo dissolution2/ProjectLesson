@@ -5,6 +5,8 @@ const s3 = new AWS.S3();
 const fs = require('fs');
 var path = require('path');
 
+const { requiresAuth } = require('express-openid-connect');
+
 // /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   const pictures = fs.readdirSync(path.join(__dirname, '../pictures'));
@@ -71,7 +73,7 @@ var path = require('path');
 // });
 
 /** AWS database  */
-router.post('/', async function(req, res, next) {
+router.post('/', requiresAuth, async function(req, res, next) {
   const file = req.files.file;
   console.log(req.files);
   await s3.putObject({
@@ -82,7 +84,7 @@ router.post('/', async function(req, res, next) {
   res.end();
 });
 
-router.get('/', async function(req, res, next) {
+router.get('/', requiresAuth, async function(req, res, next) {
 
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
