@@ -9,7 +9,7 @@ var path = require('path');
 
 
 
-console.log("test logs on cyclic");
+// console.log("test logs on cyclic");
 // console.log("auth: ", requiresAuth);
 
 
@@ -118,37 +118,37 @@ router.get('/', requiresAuth(), async function(req, res, next) {
       src: Buffer.from(my_file.Body).toString('base64'),
       name: key.split("/").pop()
     }
-  }))
+  }));
+  // console.log("test: ", pictures);
   
   res.render('pictures', {pictures: pictures});
 });
 
 
-// router.get('/:name', async function(req, res, next) {
+router.get('/:name', requiresAuth(), async function(req, res, next) {
+  const pictureName = req.params.name;
+  const key = `public/${pictureName}`;
 
-//   var params = {
-//     Bucket: process.env.CYCLIC_BUCKET_NAME,
-//     Delimiter: '/',
-//     Prefix: 'public/'
-//   };
+  try {
+    const myFile = await s3.getObject({
+      Bucket: process.env.CYCLIC_BUCKET_NAME,
+      Key: key
+    }).promise();
 
-//   var allObjects = await s3.listObjects(params).promise();
-//   var keys = allObjects?.Contents.map(x => x.Key);
+    const pictures = {
+      src: Buffer.from(myFile.Body).toString('base64'),
+      name: pictureName
+    };
 
-//   const pictures = await Promise.all(keys.map(async (key)=>{
-//     let my_file = await s3.getObject({
-//       Bucket: process.env.CYCLIC_BUCKET_NAME,
-//       Key: key
-//     }).promise();
-//     return {
-//       src: Buffer.from(my_file.Body).toString('base64'),
-//       name: key.split("/").pop()
-//     }
-//   }))
-  
+    // console.log("test: ", pictures);
+
+    res.render('pictures', { pictures: pictures });
+  } catch (error) {
+    console.error('Error fetching picture:', error);
+    res.status(500).send('Error fetching picture');
+  }
+});
 
 
-//   res.render('pictures', {pictures: pictures});
-// });
 
 module.exports = router;

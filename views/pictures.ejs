@@ -8,12 +8,22 @@
         <div class="mb-3">
             <input class="form-control" type="file" id="formFile">
         </div>
-        <% pictures.forEach(function(picture){ %>
+        <% if (pictures.length > 0) { %>
+            <!-- <p>have more then one picture in it!!</p> -->
+            <% pictures.forEach(function(picture){ %>
+                <div class="text-center">
+                  <img class="mb-3" src="data:image/png; base64, <%=picture.src%>" style="width:500px">
+                  <h4><%=picture.name%></h4>
+                </div>
+            <% });%>
+        <% } else { %>
+            <!-- <p>have only one picture !!</p> -->
             <div class="text-center">
-              <img class="mb-3" src="data:image/png; base64, <%=picture.src%>" style="width:500px">
-              <h4><%=picture.name%></h4>
-            </div>
-        <% });%>
+                <img class="mb-3" src="data:image/png; base64, <%=pictures.src%>" style="width:500px">
+                <h4><%=pictures.name%></h4>
+              </div>
+        <% } %>
+        
         <script src="../javascripts/pictures.js"></script>
     </body>
 </html>
