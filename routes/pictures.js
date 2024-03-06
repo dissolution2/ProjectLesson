@@ -97,6 +97,8 @@ router.post('/', requiresAuth(), async function(req, res, next) {
 });
 
 router.get('/', requiresAuth(), async function(req, res, next) {
+  console.log("user: ", req.oidc.user);
+  
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Delimiter: '/',
