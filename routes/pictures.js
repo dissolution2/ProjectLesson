@@ -91,18 +91,19 @@ router.post('/', requiresAuth(), async function(req, res, next) {
   await s3.putObject({
     Body: file.data,
     Bucket: process.env.CYCLIC_BUCKET_NAME,
-    Key: "public/" + file.name
+    // Key: "public/" + file.name
+    Key: req.oidc.user.email + "/" + file.name
   }).promise();
   res.end();
 });
 
 router.get('/', requiresAuth(), async function(req, res, next) {
   console.log("user: ", req.oidc.user);
-  
+
   var params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Delimiter: '/',
-    Prefix: 'public/'
+    Prefix: req.oidc.user.email + '/'
   };
 
   var allObjects = await s3.listObjects(params).promise();
